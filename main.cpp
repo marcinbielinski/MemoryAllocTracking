@@ -1,6 +1,5 @@
 #include <iostream>
 #include <memory>
-#include <vector>
 
 struct Object {
     int x, y, z;
@@ -38,15 +37,18 @@ static void printMemoryUsage()
 
 int main() {
     // before allocating a string
-    printMemoryUsage();
-    std::string str = "1234567890123456";
-    std::cout << str << "\n";
-    printMemoryUsage();
     {
-        std::unique_ptr<Object> obj = std::make_unique<Object>();
+        printMemoryUsage();
+        std::string str = "1234567890123456";
+        std::cout << str << "\n";
+        printMemoryUsage();
+        {
+            std::unique_ptr<Object> obj = std::make_unique<Object>();
+            printMemoryUsage();
+        }
+        // after freeing unique
         printMemoryUsage();
     }
-    // after freeing unique
     printMemoryUsage();
     return 0;
 }
